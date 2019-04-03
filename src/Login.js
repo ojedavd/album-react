@@ -4,10 +4,14 @@ import Avatar from '@material-ui/core/Avatar';
 import firebase from './initializers/firebase';
 import { withStyles } from '@material-ui/core/styles';
 
+import IconButton from '@material-ui/core/IconButton';
+import ExitToApp from '@material-ui/icons/ExitToApp';
+
 class Login extends Component{
     constructor(props){
         super(props)
         this.login = this.login.bind(this)
+        this.logout = this.logout.bind(this)
 
         this.state = {
             userLoggedIn: false,
@@ -23,7 +27,10 @@ class Login extends Component{
                     photoURL: user.providerData[0].photoURL
                 })
             } else {
-
+                this.setState({
+                    userLoggedIn: false,
+                    photoURL: ''
+                })
             }
         })
     }
@@ -38,9 +45,13 @@ class Login extends Component{
         })
     }
 
+    logout(){
+        firebase.auth().signOut().then(console.log);
+    }
+
     logInButton(){
         if(this.state.userLoggedIn) return(
-            [<Avatar src={this.state.photoURL} />,<p>Cerrar sesion</p>]
+            [<Avatar src={this.state.photoURL} />,(<IconButton color="inherit" onClick={this.logout}><ExitToApp /></IconButton>)]
         );
 
         return (<Button variant="contained" onClick={this.login}>
