@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
+import Login from './Login';
 
 class App extends Component {
   render() {
@@ -10,12 +10,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header" className={this.props.classes.sombra}>
           <img src={logo} className="App-logo" alt="logo" />
-          <p>
-
-          </p>
-          <Button variant="contained" className={this.props.classes.button}>
-            Learn React
-          </Button>
+          <Login />
         </header>
       </div>
     );
