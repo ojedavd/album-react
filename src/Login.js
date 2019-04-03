@@ -10,9 +10,11 @@ export default class Login extends Component{
 
     login(){
         let provider = new firebase.auth.GoogleAuthProvider();
-
+        provider.addScope('https://www.googleapis.com/auth/photoslibrary.readonly');
         firebase.auth().signInWithPopup(provider).then(result=>{
             console.log(result);
+        }).catch(err=>{
+            console.log(err);
         })
     }
 
