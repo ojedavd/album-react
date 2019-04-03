@@ -1,14 +1,17 @@
 import React,{Component} from 'react';
 import Button from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
 import firebase from './initializers/firebase';
+import { withStyles } from '@material-ui/core/styles';
 
-export default class Login extends Component{
+class Login extends Component{
     constructor(props){
         super(props)
         this.login = this.login.bind(this)
 
         this.state = {
-            userLoggedIn: false
+            userLoggedIn: false,
+            photoURL:''
         };
     }
 
@@ -16,7 +19,8 @@ export default class Login extends Component{
         firebase.auth().onAuthStateChanged((user)=>{
             if(user){
                 this.setState({
-                    userLoggedIn: true
+                    userLoggedIn: true,
+                    photoURL: user.providerData[0].photoURL
                 })
             } else {
 
@@ -36,7 +40,7 @@ export default class Login extends Component{
 
     logInButton(){
         if(this.state.userLoggedIn) return(
-            <p>Cerrar sesion</p>
+            [<Avatar src={this.state.photoURL} />,<p>Cerrar sesion</p>]
         );
 
         return (<Button variant="contained" onClick={this.login}>
@@ -46,9 +50,16 @@ export default class Login extends Component{
 
     render(){
         return(
-            <div>
+            <div className={this.props.classes.container}>
                 {this.logInButton()}
             </div>    
         );
     }
 }
+
+export default withStyles({
+    container:{
+      display: 'flex',
+      flexDirection: 'row'
+    }
+  })(Login);
