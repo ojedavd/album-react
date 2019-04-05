@@ -5,6 +5,7 @@ import firebase from './initializers/firebase';
 import { withStyles } from '@material-ui/core/styles';
 
 import { connect } from 'react-redux';
+import { saveToken, clearToken } from './initializers/actions';
 
 import IconButton from '@material-ui/core/IconButton';
 import ExitToApp from '@material-ui/icons/ExitToApp';
@@ -49,7 +50,9 @@ class Login extends Component{
     }
 
     logout(){
-        firebase.auth().signOut().then(console.log);
+        firebase.auth().signOut().then(()=>{
+            this.props.clearToken();
+        });
     }
 
     logInButton(){
@@ -78,15 +81,9 @@ const mapStateToProps = (state)=>{
     }
 }
 
-const saveToken = (token)=>{
-    return {
-        type: 'SET_TOKEN',
-        token: token
-    }
-}
-
 const mapDispatchToProps = {
-    saveToken: saveToken
+    saveToken,
+    clearToken
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Login);
