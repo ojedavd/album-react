@@ -4,6 +4,8 @@ import Avatar from '@material-ui/core/Avatar';
 import firebase from './initializers/firebase';
 import { withStyles } from '@material-ui/core/styles';
 
+import { connect } from 'react-redux';
+
 import IconButton from '@material-ui/core/IconButton';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 
@@ -40,6 +42,7 @@ class Login extends Component{
         provider.addScope('https://www.googleapis.com/auth/photoslibrary.readonly');
         firebase.auth().signInWithPopup(provider).then(result=>{
             let token = result.credential.accessToken;
+            this.props.saveToken(token);
         }).catch(err=>{
             console.log(err);
         })
@@ -61,16 +64,36 @@ class Login extends Component{
 
     render(){
         return(
-            <div className={this.props.classes.container}>
+            <div>
+                <p>{this.props.token}</p>
                 {this.logInButton()}
             </div>    
         );
     }
 }
 
-export default withStyles({
-    container:{
-      display: 'flex',
-      flexDirection: 'row'
+const mapStateToProps = (state)=>{
+    return {
+        token: state.token
     }
-  })(Login);
+}
+
+const saveToken = (token)=>{
+    return {
+        type: 'SET_TOKEN',
+        token: token
+    }
+}
+
+const mapDispatchToProps = {
+    saveToken: saveToken
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Login);
+
+//withStyles({
+//    container:{
+//      display: 'flex',
+//      flexDirection: 'row'
+//    }
+//  })(Login);
