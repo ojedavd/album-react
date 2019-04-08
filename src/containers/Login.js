@@ -1,14 +1,11 @@
 import React,{Component} from 'react';
-import Button from '@material-ui/core/Button';
-import Avatar from '@material-ui/core/Avatar';
-import firebase from './initializers/firebase';
-import { withStyles } from '@material-ui/core/styles';
+import AuthElements from '../components/AuthElements';
+import firebase from '../initializers/firebase';
 
 import { connect } from 'react-redux';
-import { saveToken, clearToken } from './initializers/actions';
+import { saveToken, clearToken } from '../initializers/actions';
 
-import IconButton from '@material-ui/core/IconButton';
-import ExitToApp from '@material-ui/icons/ExitToApp';
+
 
 class Login extends Component{
     constructor(props){
@@ -55,22 +52,15 @@ class Login extends Component{
         });
     }
 
-    logInButton(){
-        if(this.state.userLoggedIn) return(
-            [<Avatar src={this.state.photoURL} />,(<IconButton color="inherit" onClick={this.logout}><ExitToApp /></IconButton>)]
-        );
-
-        return (<Button variant="contained" onClick={this.login}>
-        Iniciar con Google
-        </Button>);
-    }
-
     render(){
         return(
-            <div>
-                <p>{this.props.token}</p>
-                {this.logInButton()}
-            </div>    
+            <AuthElements 
+                login={this.login}
+                logout={this.llgout}
+                userLoggedIn={this.state.userLoggedIn}
+                token={this.props.token}
+                photoURL={this.state.photoURL}
+            />    
         );
     }
 }
@@ -87,10 +77,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Login);
-
-//withStyles({
-//    container:{
-//      display: 'flex',
-//      flexDirection: 'row'
-//    }
-//  })(Login);
