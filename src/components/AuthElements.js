@@ -7,8 +7,8 @@ import { withStyles } from '@material-ui/core/styles';
 
 const AuthElements = function(props){
     const logInButton = ()=>{
-        if(props.userLoggedIn) return(
-            [<Avatar src={props.photoURL} />,(<IconButton color="inherit" onClick={props.logout}><ExitToApp /></IconButton>)]
+        if(props.user) return(
+            [<Avatar src={props.user.providerData[0].photoURL} />,(<IconButton color="inherit" onClick={props.logout}><ExitToApp /></IconButton>)]
         );
 
         return (<Button variant="contained" onClick={props.login}>
