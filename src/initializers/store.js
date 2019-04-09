@@ -1,4 +1,5 @@
-import {createStore, combineReducers} from 'redux';
+import {createStore, combineReducers, compose} from 'redux';
+import persisState from 'redux-localstorage';
 
 function tokenReducer(state='', action){
     switch(action.type){
@@ -27,4 +28,6 @@ let rootReducer = combineReducers({
     user: userReducer
 });
 
-export default createStore(rootReducer)
+let mainEnhancer = compose(persisState('token'));
+
+export default createStore(rootReducer,{},mainEnhancer)

@@ -15,6 +15,9 @@ class Login extends Component{
 
     }
 
+    componentDidMount(){
+        console.log(this.props.token);
+    }
 
     login(){
         let provider = new firebase.auth.GoogleAuthProvider();
@@ -37,7 +40,7 @@ class Login extends Component{
         return(
             <AuthElements 
                 login={this.login}
-                logout={this.llgout}
+                logout={this.logout}
                 token={this.props.token}
                 user={this.props.user}
             />    
