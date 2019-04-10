@@ -10,7 +10,7 @@ class Albums extends Component{
 
     loadPhotos(){
         axios({
-            url: 'https://photolibrary.googleapis.com/v1/albums',
+            url: 'https://photoslibrary.googleapis.com/v1/albums',
             method: 'GET',
             headers:{
               'Authorization': `Bearer ${this.props.token}`
