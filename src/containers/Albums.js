@@ -5,7 +5,14 @@ import {setAlbums, clearAlbums} from '../initializers/actions';
 
 class Albums extends Component{
     componentDidMount(){
-        this.loadPhotos();
+        if(process.env.NODE_ENV == 'production'){
+            this.loadPhotos();
+        } else{
+            import('../data/albums').then(module=>{
+                console.log(module.default);
+            })
+        }
+        
     }
 
     loadPhotos(){
